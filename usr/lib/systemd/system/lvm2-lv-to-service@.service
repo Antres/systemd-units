@@ -10,10 +10,12 @@ Environment=LV_NAME=%I
 Environment=LV_TAG=x-systemd.managed
 
 ExecStartPre=/sbin/lvscan --cache ${LV_NAME}
-ExecStart=/sbin/lvchange --activate y --addtag ${LV_TAG} ${LV_NAME}
+ExecStart=/sbin/lvchange --addtag ${LV_TAG} ${LV_NAME}
+ExecStart=/sbin/lvchange --activate y ${LV_NAME}
 ExecStartPost=/sbin/lvscan --cache ${LV_NAME}
 
-ExecStop=/sbin/lvchange --activate n --deltag ${LV_TAG} ${LV_NAME}
+ExecStop=/sbin/lvchange --activate n ${LV_NAME}
+ExecStop=/sbin/lvchange --deltag ${LV_TAG} ${LV_NAME}
 ExecStopPost=/sbin/lvscan --cache ${LV_NAME}
 
 ExecReload=/sbin/lvscan --cache ${LV_NAME}
