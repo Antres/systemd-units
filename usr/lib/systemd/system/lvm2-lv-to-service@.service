@@ -6,11 +6,14 @@ Documentation=man:lvchange
 Type=oneshot
 RemainAfterExit=yes
 
-ExecStartPre=/sbin/lvscan --cache %I
-ExecStart=/sbin/lvchange --activate y --addtag "x-systemd.managed" %I
-ExecStartPost=/sbin/lvscan --cache %I
+Environment=LV_NAME=%I
+Environment=LV_TAG=x-systemd.managed
 
-ExecStop=/sbin/lvchange --activate n --deltag "x-systemd.managed" %I
-ExecStopPost=/sbin/lvscan --cache %I
+ExecStartPre=/sbin/lvscan --cache ${LV_NAME}
+ExecStart=/sbin/lvchange --activate y --addtag ${LV_TAG} ${LV_NAME}
+ExecStartPost=/sbin/lvscan --cache ${LV_NAME}
 
-ExecReload=/sbin/lvscan --cache %I
+ExecStop=/sbin/lvchange --activate n --deltag ${LV_TAG} ${LV_NAME}
+ExecStopPost=/sbin/lvscan --cache ${LV_NAME}
+
+ExecReload=/sbin/lvscan --cache ${LV_NAME}
