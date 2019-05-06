@@ -3,6 +3,7 @@ Description=%I VDO volume managed as a system service
 After=systemd-remount-fs.service
 
 Conflicts=vdo.service
+
 [Service]
 Type=oneshot
 RemainAfterExit=yes
