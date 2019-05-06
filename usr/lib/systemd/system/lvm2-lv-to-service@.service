@@ -1,0 +1,16 @@
+[Unit]
+Description=%I LVM2 Logical Volume managed as a system service
+Documentation=man:lvchange
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+
+ExecStartPre=/sbin/lvscan --cache %I
+ExecStart=/sbin/lvchange --activate y --addtag "x-systemd.managed" %I
+ExecStartPost=/sbin/lvscan --cache %I
+
+ExecStop=/sbin/lvchange --activate n --deltag "x-systemd.managed" %I
+ExecStopPost=/sbin/lvscan --cache %I
+
+ExecReload=/sbin/lvscan --cache %I
