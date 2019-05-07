@@ -2,6 +2,9 @@
 Description=%I LVM2 Logical Volume managed as a system service
 Documentation=man:lvchange
 
+BindsTo=dev-%i.device
+Before=dev-%i.device
+
 [Service]
 Type=oneshot
 RemainAfterExit=yes
