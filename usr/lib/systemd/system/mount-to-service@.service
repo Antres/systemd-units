@@ -1,0 +1,17 @@
+[Unit]
+Description=%i mount point as a service
+Documentation=man:mount
+
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+
+Environment=WHAT=
+Environment=WHERE=
+Environment=TYPE=
+Environment=OPTIONS=
+
+ExecStart=/bin/mount -t ${TYPE} -o ${OPTIONS} ${WHAT} ${WHERE}
+
+ExecStop=/bin/umount ${WHAT}
