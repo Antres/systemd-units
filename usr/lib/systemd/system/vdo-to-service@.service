@@ -10,9 +10,10 @@ RemainAfterExit=yes
 
 Environment=VDO_NAME=%I
 Environment=VDO_CONF=/etc/vdoconf.yml
+Environment=VDO_LOG=/var/log/vdo/%I.log
 
-ExecStart=/usr/bin/vdo start --name ${VDO_NAME} --confFile ${VDO_CONF}
-ExecStop=/usr/bin/vdo stop --name ${VDO_NAME} --confFile ${VDO_CONF}
+ExecStart=/usr/bin/vdo start --name ${VDO_NAME} --confFile ${VDO_CONF} --logfile ${VDO_LOG}
+ExecStop=/usr/bin/vdo stop --name ${VDO_NAME} --confFile ${VDO_CONF} --logfile ${VDO_LOG}
 
 [Install]
 WantedBy=multi-user.target
